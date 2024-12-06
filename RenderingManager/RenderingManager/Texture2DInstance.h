@@ -1,13 +1,25 @@
 #pragma once
 #include "ITextureOption.h"
-
-
+#include "DirectXUtilities.h"
+#include <vector>
 
 template<typename ...IsTextureOption>
 class Texture2DInstance : public IsTextureOption...
 {
 public:
-	Texture2DInstance(ID3D11Device* device);
+	Texture2DInstance(
+		const UINT& width, 
+		const UINT& height,
+		const UINT& arraySize,
+		const std::vector<std::vector<uint8_t>>& textureDataPerArray,
+		const std::vector<UINT>& textureRowPitchPerArray,
+		const D3D11_CPU_ACCESS_FLAG& cpuAccessFlag,
+		const D3D11_RESOURCE_MISC_FLAG& miscFlagIn,
+		const D3D11_USAGE& usage,
+		const DXGI_FORMAT& format,
+		ID3D11Device* device,
+		ID3D11DeviceContext* deviceContext
+	);
 
 public:
 	static D3D11_BIND_FLAG GetBindFlags()
@@ -23,9 +35,43 @@ private:
 };
 
 template<typename ...IsTextureOption>
-inline Texture2DInstance<IsTextureOption...>::Texture2DInstance(ID3D11Device* device)
+inline Texture2DInstance<IsTextureOption...>::Texture2DInstance(
+	const UINT& width,
+	const UINT& height,
+	const UINT& arraySize,
+	const std::vector<std::vector<uint8_t>>& textureDataPerArray,
+	const std::vector<UINT>& textureRowPitchPerArray,
+	const D3D11_CPU_ACCESS_FLAG& cpuAccessFlag,
+	const D3D11_RESOURCE_MISC_FLAG& miscFlagIn,
+	const D3D11_USAGE& usage,
+	const DXGI_FORMAT& format,
+	ID3D11Device* device,
+	ID3D11DeviceContext* deviceContext
+)
 {
+	D3D11_TEXTURE2D_DESC texture2DDesc;
+	AutoZeroMemory(texture2DDesc);
+	texture2DDesc.Width = width;
+	texture2DDesc.Height = height;
+	texture2DDesc.ArraySize = arraySize;
+	texture2DDesc.MipLevels = 0;
+	texture2DDesc.BindFlags = Texture2DInstance<IsTextureOption...>::GetBindFlags();
+	texture2DDesc.CPUAccessFlags = cpuAccessFlag;
+	texture2DDesc.MiscFlags = miscFlagIn;
+	texture2DDesc.SampleDesc.Count = 1;
+	texture2DDesc.SampleDesc.Quality = 0;
+	texture2DDesc.Usage = usage;
+	texture2DDesc.Format = format;
+	AssertIfFailed(device->CreateTexture2D(&texture2DDesc, NULL, m_texture2D.GetAddressOf()));
 
+	for (size_t arrayIdx = 0; arrayIdx < textureDataPerArray.size(); ++arrayIdx)
+	{
+		const uint8_t* imageBuffer = textureDataPerArray[arrayIdx].data();
+		deviceContext->UpdateSubresource(
+			m_texture2D.Get(), D3D11CalcSubresource(0, static_cast<UINT>(arrayIdx), texture2DDesc.MipLevels), nullptr,
+			imageBuffer, textureRowPitchPerArray[arrayIdx], NULL
+		);
+	}
 
 	InitializeByOption(m_texture2D.Get(), device);
 }

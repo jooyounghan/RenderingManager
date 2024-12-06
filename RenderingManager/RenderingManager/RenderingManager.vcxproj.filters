@@ -76,6 +76,12 @@
     <Filter Include="헤더 파일\ShaderResourceManager\Texture2D">
       <UniqueIdentifier>{4b006075-c7bb-4412-ab4c-ab0a94d7744c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\PSOManager\Shader">
+      <UniqueIdentifier>{acb61cd6-648d-40b9-9722-d862d18ea54f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\PSOManager\Shader">
+      <UniqueIdentifier>{bb16ed62-fc74-4fcc-a6b1-1cd21fd218b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -130,7 +136,31 @@
       <Filter>헤더 파일\ShaderResourceManager\Texture2D</Filter>
     </ClInclude>
     <ClInclude Include="Texture2DInstance.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\ShaderResourceManager\Texture2D</Filter>
+    </ClInclude>
+    <ClInclude Include="AShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputeShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DomainShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="HullShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>헤더 파일\PSOManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="PSOObject.h">
+      <Filter>헤더 파일\PSOManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +210,31 @@
       <Filter>소스 파일\ShaderResourceManager\Texture2D</Filter>
     </ClCompile>
     <ClCompile Include="Texture2DInstance.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\ShaderResourceManager\Texture2D</Filter>
+    </ClCompile>
+    <ClCompile Include="AShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputeShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="DomainShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="HullShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>소스 파일\PSOManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="PSOObject.cpp">
+      <Filter>소스 파일\PSOManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

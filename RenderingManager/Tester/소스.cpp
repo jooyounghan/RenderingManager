@@ -3,12 +3,12 @@
 #include "RTVOption.h"
 #include "UAVOption.h"
 #include "DSVOption.h"
-#include <Texture2DInstance.h>
-
+#include "Texture2DInstance.h"
+#include "VertexShader.h"
 int main()
 {
-	Texture2DInstance<SRVOption, RTVOption, UAVOption, DSVOption> test(nullptr);
-	D3D11_BIND_FLAG t = test.GetBindFlags();
+	VertexShader vs({});
+	vs.CreateShader(L"", "", "", nullptr);
 
 	BufferManager bufferManager;
 	GUID guid =	bufferManager.RegisterConstantBuffer(nullptr, 0, 0, nullptr);

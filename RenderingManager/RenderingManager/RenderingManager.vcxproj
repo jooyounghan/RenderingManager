@@ -149,10 +149,17 @@
     <ClInclude Include="ABuffer.h" />
     <ClInclude Include="AUploadableBuffer.h" />
     <ClInclude Include="BufferManager.h" />
+    <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DirectXUtilities.h" />
+    <ClInclude Include="DomainShader.h" />
     <ClInclude Include="DSVOption.h" />
     <ClInclude Include="DynamicBuffer.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="AShader.h" />
+    <ClInclude Include="GeometryShader.h" />
+    <ClInclude Include="HullShader.h" />
+    <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="PSOObject.h" />
     <ClInclude Include="RTVOption.h" />
     <ClInclude Include="SRVOption.h" />
     <ClInclude Include="ITextureOption.h" />
@@ -164,13 +171,21 @@
     <ClInclude Include="StructureBuffer.h" />
     <ClInclude Include="Texture2DInstance.h" />
     <ClInclude Include="UAVOption.h" />
+    <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABuffer.cpp" />
     <ClCompile Include="AUploadableBuffer.cpp" />
     <ClCompile Include="BufferManager.cpp" />
+    <ClCompile Include="ComputeShader.cpp" />
+    <ClCompile Include="DomainShader.cpp" />
     <ClCompile Include="DSVOption.cpp" />
     <ClCompile Include="DynamicBuffer.cpp" />
+    <ClCompile Include="AShader.cpp" />
+    <ClCompile Include="GeometryShader.cpp" />
+    <ClCompile Include="HullShader.cpp" />
+    <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="PSOObject.cpp" />
     <ClCompile Include="RTVOption.cpp" />
     <ClCompile Include="SRVOption.cpp" />
     <ClCompile Include="ITextureOption.cpp" />
@@ -187,6 +202,7 @@
     <ClCompile Include="StructureBuffer.cpp" />
     <ClCompile Include="Texture2DInstance.cpp" />
     <ClCompile Include="UAVOption.cpp" />
+    <ClCompile Include="VertexShader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
