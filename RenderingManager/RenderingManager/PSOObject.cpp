@@ -26,32 +26,39 @@ void PSOObject::ApplyPSOObject(
 	AViewable* viewable
 )
 {
-	m_renderTargetViews.clear();
-	m_resetRenderTargetViews.clear();
-
-	m_renderTargetViews.resize(renderTargetViews.size());
-	m_resetRenderTargetViews.resize(renderTargetViews.size(), nullptr);
-
-	for (size_t idx = 0; idx < m_renderTargetViews.size(); ++idx)
+	if (IsValidate(renderTargetViews))
 	{
-		m_renderTargetViews[idx] = renderTargetViews[idx]->GetRTV();
-	}
+		m_renderTargetViews.clear();
+		m_resetRenderTargetViews.clear();
 
-	for (AShader* const shader : m_shaders)
+		m_renderTargetViews.resize(renderTargetViews.size());
+		m_resetRenderTargetViews.resize(renderTargetViews.size(), nullptr);
+
+		for (size_t idx = 0; idx < m_renderTargetViews.size(); ++idx)
+		{
+			m_renderTargetViews[idx] = renderTargetViews[idx]->GetRTV();
+		}
+
+		for (AShader* const shader : m_shaders)
+		{
+			shader->SetShader(deviceContext);
+			shader->SetSamplerState(deviceContext, m_samplerStates);
+		}
+
+		deviceContext->IASetPrimitiveTopology(m_topology);
+
+		deviceContext->RSSetState(m_rasterizerState);
+		deviceContext->OMSetDepthStencilState(m_depthStencilState, 0);
+
+		deviceContext->OMSetBlendState(m_blendState, BlendFactor, 0xFFFFFFFF);
+
+		deviceContext->RSSetViewports(1, &viewable->GetViewport());
+		deviceContext->OMSetRenderTargets(static_cast<UINT>(renderTargetViews.size()), m_renderTargetViews.data(), depthStencilView->GetDSV());
+	}
+	else
 	{
-		shader->SetShader(deviceContext);
-		shader->SetSamplerState(deviceContext, m_samplerStates);
+		throw std::exception();
 	}
-
-	deviceContext->IASetPrimitiveTopology(m_topology);
-
-	deviceContext->RSSetState(m_rasterizerState);
-	deviceContext->OMSetDepthStencilState(m_depthStencilState, 0);
-
-	deviceContext->OMSetBlendState(m_blendState, BlendFactor, 0xFFFFFFFF);
-
-	deviceContext->RSSetViewports(1, &viewable->GetViewport());
-	deviceContext->OMSetRenderTargets(static_cast<UINT>(renderTargetViews.size()), m_renderTargetViews.data(), depthStencilView->GetDSV());
 }
 
 void PSOObject::ResetPSOObject(ID3D11DeviceContext* deviceContext) const

@@ -37,5 +37,8 @@ protected:
 public:
 	void ApplyPSOObject(ID3D11DeviceContext* deviceContext, const std::vector<RTVOption*>& renderTargetViews, DSVOption* depthStencilView, AViewable* viewable);
 	void ResetPSOObject(ID3D11DeviceContext* deviceContext) const;
+
+public:
+	virtual bool IsValidate(const std::vector<RTVOption*>& renderTargetViews) = 0;
 };
 

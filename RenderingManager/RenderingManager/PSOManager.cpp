@@ -23,9 +23,9 @@ void PSOManager::RegisterVertexShader(const string& shaderName, const vector<D3D
 	RegisterShaderImpl<VertexShader>(shaderName, shaderPath, entryPoint, targetVersion, device, inputElementDescs);
 }
 
-void PSOManager::RegisterPixelShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
+void PSOManager::RegisterPixelShader(const string& shaderName, const UINT& renderTargetCounts, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
 {
-	RegisterShaderImpl<PixelShader>(shaderName, shaderPath, entryPoint, targetVersion, device);
+	RegisterShaderImpl<PixelShader>(shaderName, shaderPath, entryPoint, targetVersion, device, renderTargetCounts);
 }
 
 void PSOManager::RegisterHullShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)

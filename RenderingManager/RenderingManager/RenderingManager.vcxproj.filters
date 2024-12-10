@@ -174,10 +174,10 @@
     <ClInclude Include="PSOObject.h">
       <Filter>헤더 파일\RenderingManager\PSOManager\PSOObject</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsPSOObject.h">
+    <ClInclude Include="ComputePSOObject.h">
       <Filter>헤더 파일\RenderingManager\PSOManager\PSOObject</Filter>
     </ClInclude>
-    <ClInclude Include="ComputePSOObject.h">
+    <ClInclude Include="GraphicsPSOObject.h">
       <Filter>헤더 파일\RenderingManager\PSOManager\PSOObject</Filter>
     </ClInclude>
   </ItemGroup>
@@ -260,10 +260,10 @@
     <ClCompile Include="PSOObject.cpp">
       <Filter>소스 파일\RenderingManager\PSOManager\PSOObject</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsPSOObject.cpp">
+    <ClCompile Include="ComputePSOObject.cpp">
       <Filter>소스 파일\RenderingManager\PSOManager\PSOObject</Filter>
     </ClCompile>
-    <ClCompile Include="ComputePSOObject.cpp">
+    <ClCompile Include="GraphicsPSOObject.cpp">
       <Filter>소스 파일\RenderingManager\PSOManager\PSOObject</Filter>
     </ClCompile>
   </ItemGroup>

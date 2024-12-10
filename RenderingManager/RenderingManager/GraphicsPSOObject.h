@@ -8,6 +8,7 @@
 
 class GraphicsPSOObject : public PSOObject
 {
+public:
 	GraphicsPSOObject(
 		ID3D11DepthStencilState* depthStencilState,
 		ID3D11BlendState* blendState,
@@ -19,9 +20,17 @@ class GraphicsPSOObject : public PSOObject
 		HullShader* hullShader,
 		DomainShader* domainShader,
 		GeometryShader* geometryShader
-	) : PSOObject(depthStencilState, blendState, rasterizerState, samplerStates, topology, { vertexShader,pixelShader,hullShader,domainShader,geometryShader })
-	{
+	);
+	virtual ~GraphicsPSOObject();
 
-	}
+protected:
+	VertexShader* m_vertexShader;
+	PixelShader* m_pixelShader;
+	HullShader* m_hullShader;
+	DomainShader* m_domainShader;
+	GeometryShader* m_geometryShader;
+
+public:
+	virtual bool IsValidate(const std::vector<RTVOption*>& renderTargetViews) override;
 };
 

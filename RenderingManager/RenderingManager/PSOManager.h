@@ -19,7 +19,7 @@ protected:
 
 public:
 	void RegisterVertexShader(const std::string& shaderName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& inputElementDescs, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
-	void RegisterPixelShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	void RegisterPixelShader(const std::string& shaderName, const UINT& renderTargetCounts, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
 	void RegisterHullShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
 	void RegisterDomainShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
 	void RegisterGeometryShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);

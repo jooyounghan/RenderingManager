@@ -3,6 +3,11 @@
 
 using namespace std;
 
+PixelShader::PixelShader(const UINT& renderTargetCount)
+    : m_renderTargetCount(renderTargetCount)
+{
+}
+
 void PixelShader::CreateShaderImpl(
 	const wstring& shaderPath, 
 	const string& entryPoint, 

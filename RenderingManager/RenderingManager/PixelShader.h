@@ -4,10 +4,14 @@
 class PixelShader : public AShader
 {
 public:
-	PixelShader() = default;
+	PixelShader(const UINT& renderTargetCount);
 
 protected:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
+	const UINT m_renderTargetCount;
+
+public:
+	inline const UINT& GetRenderTargetCounts() { return m_renderTargetCount; }
 
 protected:
 	virtual void CreateShaderImpl(
