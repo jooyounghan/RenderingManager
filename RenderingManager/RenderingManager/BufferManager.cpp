@@ -63,20 +63,6 @@ GUID BufferManager::RegisterStructureBuffer(
 	return guid;
 }
 
-GUID BufferManager::RegisterBuffer(const std::shared_ptr<ConstantBuffer>& buffer)
-{
-	GUID guid = IssueGuid();
-	m_guidToRegisteredConstantBuffers.emplace(guid, buffer);
-	return guid;
-}
-
-GUID BufferManager::RegisterBuffer(const std::shared_ptr<AUploadableBuffer>& buffer)
-{
-	GUID guid = IssueGuid();
-	m_guidToRegisteredUploadableBuffers.emplace(guid, buffer);
-	return guid;
-}
-
 GUID BufferManager::IssueGuid()
 {
 	GUID guid;
@@ -85,28 +71,28 @@ GUID BufferManager::IssueGuid()
 }
 
 template<typename IsInitializableBuffer, typename ...Args>
-inline std::shared_ptr<IsInitializableBuffer> BufferManager::RegisterWithCreateHelper(ID3D11Device* device, Args ...args)
+inline unique_ptr<IsInitializableBuffer> BufferManager::RegisterWithCreateHelper(ID3D11Device* device, Args ...args)
 {
-	shared_ptr<IsInitializableBuffer> buffer = make_shared<IsInitializableBuffer>(args...);
+	unique_ptr<IsInitializableBuffer> buffer = make_unique<IsInitializableBuffer>(args...);
 	buffer->Initialize(device);
 	return buffer;
 }
 
 
-std::shared_ptr<ConstantBuffer> BufferManager::GetRegisteredConstantBuffer(const GUID& guid)
+ConstantBuffer* BufferManager::GetRegisteredConstantBuffer(const GUID& guid)
 {
 	if (m_guidToRegisteredConstantBuffers.find(guid) != m_guidToRegisteredConstantBuffers.end())
 	{
-		return m_guidToRegisteredConstantBuffers[guid];
+		return m_guidToRegisteredConstantBuffers[guid].get();
 	}
 	return nullptr;
 }
 
-std::shared_ptr<AUploadableBuffer> BufferManager::GetRegisteredUploadableBuffer(const GUID& guid)
+AUploadableBuffer* BufferManager::GetRegisteredUploadableBuffer(const GUID& guid)
 {
 	if (m_guidToRegisteredUploadableBuffers.find(guid) != m_guidToRegisteredUploadableBuffers.end())
 	{
-		return m_guidToRegisteredUploadableBuffers[guid];
+		return m_guidToRegisteredUploadableBuffers[guid].get();
 	}
 	return nullptr;
 }
@@ -116,10 +102,11 @@ void BufferManager::RequestUpload(const GUID& guid, ID3D11DeviceContext* deviceC
 	UploadRequestArgs uploadRequestArgs;
 	AutoZeroMemory(uploadRequestArgs);
 
-	shared_ptr<AUploadableBuffer> uploadableBuffer = GetRegisteredUploadableBuffer(guid);
+	AUploadableBuffer* uploadableBuffer = GetRegisteredUploadableBuffer(guid);
+
 	if (uploadableBuffer != nullptr)
 	{
-		uploadRequestArgs.uploadableBuffer = uploadableBuffer.get();
+		uploadRequestArgs.uploadableBuffer = uploadableBuffer;
 		uploadRequestArgs.deviceContext = deviceContext;
 		uploadRequestArgs.elementSize = elementSize;
 		uploadRequestArgs.arrayCount = arrayCount;

@@ -3,6 +3,9 @@
 #include "PSOObject.h"
 #include <unordered_map>
 
+template <typename T>
+concept ShaderType = std::is_base_of_v<AShader, T>;
+
 class PSOManager
 {
 public:
@@ -12,11 +15,28 @@ protected:
 	ID3D11Device* m_deviceCached = nullptr;
 
 protected:
-	std::unordered_map<std::string, std::shared_ptr<AShader>> m_registeredShaders;
+	std::unordered_map<std::string, std::unique_ptr<AShader>> m_registeredShaders;
 
 public:
-	void RegisterShader(const std::string& shaderName, const std::shared_ptr<AShader>& shader);
-	std::shared_ptr<AShader> GetRegisteredShader(const std::string& shaderName);
+	void RegisterVertexShader(const std::string& shaderName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& inputElementDescs, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	void RegisterPixelShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	void RegisterHullShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	void RegisterDomainShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	void RegisterGeometryShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	void RegisterComputeShader(const std::string& shaderName, const std::wstring& shaderPath, const std::string& entryPoint, const std::string& targetVersion, ID3D11Device* device);
+	AShader* GetRegisteredShader(const std::string& shaderName);
+
+private:
+	template<typename ShaderType, typename ...Args>
+	void RegisterShaderImpl(
+		const std::string& shaderName,
+		const std::wstring& shaderPath,
+		const std::string& entryPoint,
+		const std::string& targetVersion,
+		ID3D11Device* device,
+		Args... args
+	);
+
 
 protected:
 	std::unordered_map<std::string, Microsoft::WRL::ComPtr<ID3D11DepthStencilState>> m_registeredDepthStencilStates;

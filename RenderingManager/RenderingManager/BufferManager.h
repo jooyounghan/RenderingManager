@@ -58,24 +58,20 @@ public:
 		const UINT& arrayCount
 	);
 
-public:
-	GUID RegisterBuffer(const std::shared_ptr<ConstantBuffer>& buffer);
-	GUID RegisterBuffer(const std::shared_ptr<AUploadableBuffer>& buffer);
-
 private:
 	GUID IssueGuid();
-	template<typename IsInitializableBuffer, typename ...Args> std::shared_ptr<IsInitializableBuffer> RegisterWithCreateHelper(
+	template<typename IsInitializableBuffer, typename ...Args> std::unique_ptr<IsInitializableBuffer> RegisterWithCreateHelper(
 		ID3D11Device* device, Args... args
 	);
 
 
 protected:
-	std::unordered_map<GUID, std::shared_ptr<ConstantBuffer>> m_guidToRegisteredConstantBuffers;
-	std::unordered_map<GUID, std::shared_ptr<AUploadableBuffer>> m_guidToRegisteredUploadableBuffers;
+	std::unordered_map<GUID, std::unique_ptr<ConstantBuffer>> m_guidToRegisteredConstantBuffers;
+	std::unordered_map<GUID, std::unique_ptr<AUploadableBuffer>> m_guidToRegisteredUploadableBuffers;
 
 public:
-	std::shared_ptr<ConstantBuffer> GetRegisteredConstantBuffer(const GUID& guid);
-	std::shared_ptr<AUploadableBuffer> GetRegisteredUploadableBuffer(const GUID& guid);
+	ConstantBuffer* GetRegisteredConstantBuffer(const GUID& guid);
+	AUploadableBuffer* GetRegisteredUploadableBuffer(const GUID& guid);
 
 public:
 	void RequestUpload(const GUID& guid, ID3D11DeviceContext* deviceContext, const UINT& elementSize, const UINT& arrayCount, void* cpuDataIn);

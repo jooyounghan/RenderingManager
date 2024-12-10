@@ -25,7 +25,18 @@ void PixelShader::SetShader(ID3D11DeviceContext* deviceContext) const
 void PixelShader::SetSamplerState(
     ID3D11DeviceContext* deviceContext,
     const std::vector<ID3D11SamplerState*>& samplerStates
-) const
+)
 {
+    AShader::SetSamplerState(deviceContext, samplerStates);
     deviceContext->PSSetSamplers(0, static_cast<UINT>(samplerStates.size()), samplerStates.data());
+}
+
+void PixelShader::ResetShader(ID3D11DeviceContext* deviceContext) const
+{
+    deviceContext->PSSetShader(nullptr, NULL, NULL);
+}
+
+void PixelShader::ResetSamplerState(ID3D11DeviceContext* deviceContext) const
+{
+    deviceContext->PSSetSamplers(0, static_cast<UINT>(m_resetSamplerState.size()), m_resetSamplerState.data());
 }

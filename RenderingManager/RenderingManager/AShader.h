@@ -34,6 +34,9 @@ protected:
 	Microsoft::WRL::ComPtr<ID3DBlob> shaderByteCode;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorByteCode;
 
+protected:
+	std::vector<ID3D11SamplerState*> m_resetSamplerState;
+
 public:
 	void ResetByteCode();
 
@@ -44,6 +47,8 @@ public:
 	virtual void SetSamplerState(
 		ID3D11DeviceContext* deviceContext,
 		const std::vector<ID3D11SamplerState*>& samplerStates
-	) const = 0;
+	);
+	virtual void ResetShader(ID3D11DeviceContext* deviceContext) const = 0;
+	virtual void ResetSamplerState(ID3D11DeviceContext* deviceContext) const = 0;
 };
 

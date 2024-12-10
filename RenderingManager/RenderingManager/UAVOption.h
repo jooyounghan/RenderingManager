@@ -3,6 +3,9 @@
 
 class UAVOption : public ITextureOption
 {
+public:
+	UAVOption() = default;
+
 protected:
 	constexpr static D3D11_BIND_FLAG GetBindFlag()
 	{
@@ -16,5 +19,5 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> m_uav;
 
 public:
-	ID3D11UnorderedAccessView* GetUAV() { return m_uav.Get(); }
+	ID3D11UnorderedAccessView* GetUAV() const { return m_uav.Get(); }
 };

@@ -13,8 +13,8 @@ public:
 		const UINT& arraySize,
 		const std::vector<std::vector<uint8_t>>& textureDataPerArray,
 		const std::vector<UINT>& textureRowPitchPerArray,
-		const D3D11_CPU_ACCESS_FLAG& cpuAccessFlag,
-		const D3D11_RESOURCE_MISC_FLAG& miscFlagIn,
+		const UINT& cpuAccessFlag,
+		const UINT& miscFlagIn,
 		const D3D11_USAGE& usage,
 		const DXGI_FORMAT& format,
 		ID3D11Device* device,
@@ -27,8 +27,11 @@ public:
 		return (D3D11_BIND_FLAG)(IsTextureOption::GetBindFlag() | ...);
 	};
 
-public:
+protected:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture2D;
+
+public:
+	inline const ID3D11Texture2D* const GetTexture2D() { return m_texture2D.Get(); }
 
 private:
 	virtual void InitializeByOption(ID3D11Resource* resource, ID3D11Device* device) override;
@@ -41,8 +44,8 @@ inline Texture2DInstance<IsTextureOption...>::Texture2DInstance(
 	const UINT& arraySize,
 	const std::vector<std::vector<uint8_t>>& textureDataPerArray,
 	const std::vector<UINT>& textureRowPitchPerArray,
-	const D3D11_CPU_ACCESS_FLAG& cpuAccessFlag,
-	const D3D11_RESOURCE_MISC_FLAG& miscFlagIn,
+	const UINT& cpuAccessFlag,
+	const UINT& miscFlagIn,
 	const D3D11_USAGE& usage,
 	const DXGI_FORMAT& format,
 	ID3D11Device* device,

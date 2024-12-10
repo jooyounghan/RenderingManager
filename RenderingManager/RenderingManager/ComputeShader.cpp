@@ -25,7 +25,18 @@ void ComputeShader::SetShader(ID3D11DeviceContext* deviceContext) const
 void ComputeShader::SetSamplerState(
 	ID3D11DeviceContext* deviceContext,
 	const std::vector<ID3D11SamplerState*>& samplerStates
-) const
+)
 {
+	AShader::SetSamplerState(deviceContext, samplerStates);
 	deviceContext->CSSetSamplers(0, static_cast<UINT>(samplerStates.size()), samplerStates.data());
+}
+
+void ComputeShader::ResetShader(ID3D11DeviceContext* deviceContext) const
+{
+	deviceContext->CSSetShader(nullptr, NULL, NULL);
+}
+
+void ComputeShader::ResetSamplerState(ID3D11DeviceContext* deviceContext) const
+{
+	deviceContext->CSSetSamplers(0, static_cast<UINT>(m_resetSamplerState.size()), m_resetSamplerState.data());
 }

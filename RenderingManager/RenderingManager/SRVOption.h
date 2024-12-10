@@ -3,6 +3,9 @@
 
 class SRVOption : public ITextureOption
 {
+public:
+	SRVOption() = default;
+
 protected:
 	constexpr static D3D11_BIND_FLAG GetBindFlag()
 	{
@@ -16,6 +19,6 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_srv;
 
 public:
-	ID3D11ShaderResourceView* GetSRV() { return m_srv.Get(); }
+	ID3D11ShaderResourceView* GetSRV() const { return m_srv.Get(); }
 };
 

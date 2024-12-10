@@ -25,3 +25,11 @@ void AShader::ResetByteCode()
 	shaderByteCode.Reset();
 	errorByteCode.Reset();
 }
+
+void AShader::SetSamplerState(
+	ID3D11DeviceContext* deviceContext, 
+	const std::vector<ID3D11SamplerState*>& samplerStates
+)
+{
+	m_resetSamplerState.resize(samplerStates.size(), nullptr);
+}

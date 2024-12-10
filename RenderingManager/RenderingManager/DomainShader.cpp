@@ -25,7 +25,18 @@ void DomainShader::SetShader(ID3D11DeviceContext* deviceContext) const
 void DomainShader::SetSamplerState(
 	ID3D11DeviceContext* deviceContext,
 	const std::vector<ID3D11SamplerState*>& samplerStates
-) const
+)
 {
+	AShader::SetSamplerState(deviceContext, samplerStates);
 	deviceContext->DSSetSamplers(0, static_cast<UINT>(samplerStates.size()), samplerStates.data());
+}
+
+void DomainShader::ResetShader(ID3D11DeviceContext* deviceContext) const
+{
+	deviceContext->GSSetShader(nullptr, NULL, NULL);
+}
+
+void DomainShader::ResetSamplerState(ID3D11DeviceContext* deviceContext) const
+{
+	deviceContext->DSSetSamplers(0, static_cast<UINT>(m_resetSamplerState.size()), m_resetSamplerState.data());
 }

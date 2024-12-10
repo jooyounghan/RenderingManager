@@ -3,6 +3,9 @@
 
 class DSVOption : public ITextureOption
 {
+public:
+	DSVOption() = default;
+
 protected:
 	constexpr static D3D11_BIND_FLAG GetBindFlag()
 	{
@@ -16,5 +19,5 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_dsv;
 
 public:
-	ID3D11DepthStencilView* GetDSV() { return m_dsv.Get(); }
+	ID3D11DepthStencilView* GetDSV() const { return m_dsv.Get(); }
 };

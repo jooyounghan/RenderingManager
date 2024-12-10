@@ -149,6 +149,7 @@
     <ClInclude Include="ABuffer.h" />
     <ClInclude Include="AUploadableBuffer.h" />
     <ClInclude Include="BufferManager.h" />
+    <ClInclude Include="ComputePSOObject.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DirectXUtilities.h" />
     <ClInclude Include="DomainShader.h" />
@@ -157,7 +158,10 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="AShader.h" />
     <ClInclude Include="GeometryShader.h" />
+    <ClInclude Include="GraphicsPSOObject.h" />
     <ClInclude Include="HullShader.h" />
+    <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="AViewable.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PSOObject.h" />
     <ClInclude Include="RTVOption.h" />
@@ -177,13 +181,17 @@
     <ClCompile Include="ABuffer.cpp" />
     <ClCompile Include="AUploadableBuffer.cpp" />
     <ClCompile Include="BufferManager.cpp" />
+    <ClCompile Include="ComputePSOObject.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DomainShader.cpp" />
     <ClCompile Include="DSVOption.cpp" />
     <ClCompile Include="DynamicBuffer.cpp" />
     <ClCompile Include="AShader.cpp" />
     <ClCompile Include="GeometryShader.cpp" />
+    <ClCompile Include="GraphicsPSOObject.cpp" />
     <ClCompile Include="HullShader.cpp" />
+    <ClCompile Include="IRenderable.cpp" />
+    <ClCompile Include="AViewable.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PSOObject.cpp" />
     <ClCompile Include="RTVOption.cpp" />

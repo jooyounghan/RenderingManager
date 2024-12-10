@@ -1,6 +1,15 @@
 #include "pch.h"
 #include "PSOManager.h"
+
+#include "VertexShader.h"
+#include "PixelShader.h"
+#include "HullShader.h"
+#include "DomainShader.h"
+#include "GeometryShader.h"
+#include "ComputeShader.h"
+
 #include "DirectXUtilities.h"
+
 
 using namespace std;
 using namespace Microsoft::WRL;
@@ -9,16 +18,59 @@ PSOManager::PSOManager(ID3D11Device* device) : m_deviceCached(device)
 {
 }
 
-void PSOManager::RegisterShader(const string& shaderName, const shared_ptr<AShader>& shader)
+void PSOManager::RegisterVertexShader(const string& shaderName, const vector<D3D11_INPUT_ELEMENT_DESC>& inputElementDescs, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
 {
-	m_registeredShaders[shaderName] = shader;
+	RegisterShaderImpl<VertexShader>(shaderName, shaderPath, entryPoint, targetVersion, device, inputElementDescs);
 }
 
-shared_ptr<AShader> PSOManager::GetRegisteredShader(const string& shaderName)
+void PSOManager::RegisterPixelShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
+{
+	RegisterShaderImpl<PixelShader>(shaderName, shaderPath, entryPoint, targetVersion, device);
+}
+
+void PSOManager::RegisterHullShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
+{
+	RegisterShaderImpl<HullShader>(shaderName, shaderPath, entryPoint, targetVersion, device);
+}
+
+void PSOManager::RegisterDomainShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
+{
+	RegisterShaderImpl<DomainShader>(shaderName, shaderPath, entryPoint, targetVersion, device);
+}
+
+void PSOManager::RegisterGeometryShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
+{
+	RegisterShaderImpl<GeometryShader>(shaderName, shaderPath, entryPoint, targetVersion, device);
+}
+
+void PSOManager::RegisterComputeShader(const string& shaderName, const wstring& shaderPath, const string& entryPoint, const string& targetVersion, ID3D11Device* device)
+{
+	RegisterShaderImpl<ComputeShader>(shaderName, shaderPath, entryPoint, targetVersion, device);
+}
+
+template<typename ShaderType, typename ...Args>
+inline void PSOManager::RegisterShaderImpl(
+	const string& shaderName, 
+	const wstring& shaderPath, 
+	const string& entryPoint, 
+	const string& targetVersion, 
+	ID3D11Device* device,
+	Args... args
+)
 {
 	if (m_registeredShaders.find(shaderName) != m_registeredShaders.end())
 	{
-		return m_registeredShaders[shaderName];
+		m_registeredShaders[shaderName] = make_unique<ShaderType>(args...);
+		m_registeredShaders[shaderName]->CreateShader(shaderPath, entryPoint, targetVersion, device);
+	}
+}
+
+
+AShader* PSOManager::GetRegisteredShader(const string& shaderName)
+{
+	if (m_registeredShaders.find(shaderName) != m_registeredShaders.end())
+	{
+		return m_registeredShaders[shaderName].get();
 	}
 	return nullptr;
 }
